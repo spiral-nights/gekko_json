@@ -14,6 +14,10 @@ gleam_stdlib = ">= 1.0.0 and < 2.0.0"
 gleam_json = ">= 3.0.0 and < 4.0.0"
 gekko_stdlib = { git = "https://github.com/spiral-nights/gekko_stdlib.git", ref = "main" }
 gekko_json = { git = "https://github.com/spiral-nights/gekko_json.git", ref = "main" }
+
+[tools.gekko.shims]
+gleam_stdlib = "gekko_stdlib"
+gleam_json = "gekko_json"
 ```
 
 Then build or test with `gekko` (standard `gleam check` and `gleam test` on Erlang/JS continue to work untouched):

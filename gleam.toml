@@ -11,3 +11,6 @@ gekko_stdlib = { git = "https://github.com/spiral-nights/gekko_stdlib.git", ref 
 [tools.gekko.shim]
 target = "gleam_json"
 version = ">= 3.0.0 and < 4.0.0"
+
+[tools.gekko.shims]
+gleam_stdlib = "gekko_stdlib"

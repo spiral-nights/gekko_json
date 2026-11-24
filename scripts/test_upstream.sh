@@ -56,6 +56,10 @@ gleam_stdlib = ">= 1.0.0 and < 2.0.0"
 gleam_json = ">= 3.0.0 and < 4.0.0"
 $STDLIB_SHIM_DEP
 $JSON_SHIM_DEP
+
+[tools.gekko.shims]
+gleam_stdlib = "gekko_stdlib"
+gleam_json = "gekko_json"
 EOF
 
 cat > "$PROJECT_DIR/src/gleeunit/should.gleam" <<'EOF'

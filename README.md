@@ -2,7 +2,7 @@
 
 Companion MoonBit/Wasm shim overlay package for unmodified upstream [`gleam_json`](https://hex.pm/packages/gleam_json), built for [`gekko`](https://github.com/spiral-nights/gekko).
 
-Instead of forking `gleam_json`, `gekko_json` provides only the MoonBit FFI primitives (`moonbit/gleam_json_ffi/`), in-package patches (`overlays/`), and symbol-level override configuration (`gekko.toml`) needed to compile upstream `gleam_json` to MoonBit (`wasm`, `wasm-gc`, `js`, `native`, and Wasm Components).
+Instead of forking `gleam_json`, `gekko_json` provides co-located MoonBit module patches (`patches/gleam/json.mbt`) and symbol-level configuration (`gekko.toml`) so upstream `gleam_json` compiles cleanly to MoonBit (`wasm`, `wasm-gc`, `js`, `native`, and Wasm Components).
 
 ## Usage
 

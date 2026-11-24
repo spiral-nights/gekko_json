@@ -102,52 +102,57 @@ fn format_char_hex(c : Char) -> String {
 }
 
 ///|
-pub fn decode_string(json_str : String) -> Result[@gprelude.Dynamic, (Int64, String)] {
+fn decode_string(json_str : String) -> Result[@gprelude.Dynamic, DecodeError] {
   let parsed : @json.Json = try {
     @json.parse(json_str, preserve_number_repr=true)
   } catch {
-    @json.InvalidEof => return Err((0L, ""))
-    @json.InvalidChar(_, c) => return Err((1L, format_char_hex(c)))
-    @json.InvalidNumber(_, s) => return Err((2L, s))
-    @json.InvalidIdentEscape(_) => return Err((2L, "escape"))
-    @json.DuplicateKey(_, k) => return Err((2L, k))
-    @json.DepthLimitExceeded => return Err((2L, "depth"))
+    @json.InvalidEof => return Err(UnexpectedEndOfInput)
+    @json.InvalidChar(_, c) => return Err(UnexpectedByte(format_char_hex(c)))
+    @json.InvalidNumber(_, s) => return Err(UnexpectedSequence(s))
+    @json.InvalidIdentEscape(_) => return Err(UnexpectedSequence("escape"))
+    @json.DuplicateKey(_, k) => return Err(UnexpectedSequence(k))
+    @json.DepthLimitExceeded => return Err(UnexpectedSequence("depth"))
   }
   Ok(json_to_dynamic(parsed))
 }
 
 ///|
-pub fn json_to_string(j : Json) -> String {
+fn do_to_string(j : Json) -> String {
   j.raw.stringify()
 }
 
 ///|
-pub fn json_string(input : String) -> Json {
+pub fn to_string_tree(json : Json) -> @string_tree.StringTree {
+  @string_tree.from_string(do_to_string(json))
+}
+
+///|
+fn do_string(input : String) -> Json {
   { raw: @json.Json::string(input) }
 }
 
 ///|
-pub fn json_bool(input : Bool) -> Json {
+fn do_bool(input : Bool) -> Json {
   { raw: @json.Json::boolean(input) }
 }
 
 ///|
-pub fn json_int(input : Int64) -> Json {
+fn do_int(input : Int64) -> Json {
   { raw: @json.Json::number(input.to_double(), repr=input.to_string()) }
 }
 
 ///|
-pub fn json_float(input : Double) -> Json {
+fn do_float(input : Double) -> Json {
   { raw: @json.Json::number(input) }
 }
 
 ///|
-pub fn json_null() -> Json {
+fn do_null() -> Json {
   { raw: @json.Json::null() }
 }
 
 ///|
-pub fn json_object(entries : @gprelude.GList[(String, Json)]) -> Json {
+fn do_object(entries : @gprelude.GList[(String, Json)]) -> Json {
   let m : Map[String, @json.Json] = Default::default()
   for cur = entries {
     match cur {
@@ -161,6 +166,6 @@ pub fn json_object(entries : @gprelude.GList[(String, Json)]) -> Json {
 }
 
 ///|
-pub fn json_array(entries : @gprelude.GList[Json]) -> Json {
+fn do_preprocessed_array(entries : @gprelude.GList[Json]) -> Json {
   { raw: @json.Json::array(entries.to_array().map(fn(j) { j.raw })) }
 }

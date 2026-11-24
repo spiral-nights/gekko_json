@@ -2,7 +2,7 @@
 
 Companion MoonBit/Wasm shim overlay package for unmodified upstream [`gleam_json`](https://hex.pm/packages/gleam_json), built for [`gekko`](https://github.com/spiral-nights/gekko).
 
-Instead of forking `gleam_json`, `gekko_json` provides co-located MoonBit module patches (`patches/gleam/json/json.mbt` + `moon.pkg` with `#gekko.patch` attributes) and `[tools.gekko.shim]` configuration in `gleam.toml` so upstream `gleam_json` compiles cleanly to MoonBit (`wasm`, `wasm-gc`, `js`, `native`, and Wasm Components).
+Instead of forking `gleam_json`, `gekko_json` provides co-located MoonBit module patches (`patches/gleam/json/json.mbt` + `moon.pkg` with `#gekko.patch` attributes) and `[tools.gekko.shim_for]` configuration in `gleam.toml` so upstream `gleam_json` compiles cleanly to MoonBit (`wasm`, `wasm-gc`, `js`, `native`, and Wasm Components).
 
 ## Usage
 
@@ -15,7 +15,7 @@ gleam_json = ">= 3.0.0 and < 4.0.0"
 gekko_stdlib = { git = "https://github.com/spiral-nights/gekko_stdlib.git", ref = "main" }
 gekko_json = { git = "https://github.com/spiral-nights/gekko_json.git", ref = "main" }
 
-[tools.gekko.shims]
+[tools.gekko.use_shims]
 gleam_stdlib = "gekko_stdlib"
 gleam_json = "gekko_json"
 ```

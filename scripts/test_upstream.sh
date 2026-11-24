@@ -57,7 +57,7 @@ gleam_json = ">= 3.0.0 and < 4.0.0"
 $STDLIB_SHIM_DEP
 $JSON_SHIM_DEP
 
-[tools.gekko.shims]
+[tools.gekko.use_shims]
 gleam_stdlib = "gekko_stdlib"
 gleam_json = "gekko_json"
 EOF

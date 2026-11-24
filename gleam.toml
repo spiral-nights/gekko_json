@@ -8,9 +8,9 @@ repository = { type = "github", user = "spiral-nights", repo = "gekko_json" }
 gleam_json = ">= 3.0.0 and < 4.0.0"
 gekko_stdlib = { git = "https://github.com/spiral-nights/gekko_stdlib.git", ref = "main" }
 
-[tools.gekko.shim]
-target = "gleam_json"
+[tools.gekko.shim_for]
+package = "gleam_json"
 version = ">= 3.0.0 and < 4.0.0"
 
-[tools.gekko.shims]
+[tools.gekko.use_shims]
 gleam_stdlib = "gekko_stdlib"

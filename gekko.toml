@@ -4,7 +4,7 @@ version = ">= 3.0.0 and < 4.0.0"
 
 [patch."gleam_json:gleam/json"]
 file = "patches/gleam/json.mbt"
-imports = ["moonbitlang/core/json as json", "moonbitlang/core/string as str"]
+imports = ["moonbitlang/core/json", "moonbitlang/core/string as str"]
 types = ["Json"]
 functions = [
   "decode_string",

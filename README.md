@@ -24,6 +24,16 @@ gekko test
 gekko build --release
 ```
 
+## Testing
+
+Run the upstream `gleam_json` parity suite (`26` tests across `wasm`, `wasm-gc`, `js`, and `native`) against unmodified Hex `gleam_json` + `gleam_stdlib`:
+
+```bash
+./scripts/test_upstream.sh
+```
+
+Override `GEKKO_STDLIB_DIR=/path/to/gekko_stdlib` to test against a local `gekko_stdlib` checkout.
+
 ## License
 
 MIT — see [`LICENSE`](./LICENSE).

@@ -1,0 +1,8 @@
+name = "gekko_json"
+version = "0.1.0"
+description = "MoonBit/gekko companion shim overlay for upstream gleam_json"
+licences = ["MIT"]
+repository = { type = "github", user = "spiral-nights", repo = "gekko_json" }
+
+[dependencies]
+gleam_json = ">= 3.0.0 and < 4.0.0"

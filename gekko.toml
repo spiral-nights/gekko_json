@@ -1,0 +1,49 @@
+[shim]
+target = "gleam_json"
+version = ">= 3.0.0 and < 4.0.0"
+
+[type_overrides."gleam_json:gleam/json.Json"]
+package = "gleam_json_ffi"
+type = "Json"
+
+[module_inject."gleam_json:gleam/json"]
+files = ["overlays/gleam_json_patch.mbt"]
+imports = ["gleam_json_ffi", "gprelude"]
+
+[overrides."gleam_json:gleam/json.decode_string"]
+in_package = "__shim_decode_string"
+
+[overrides."gleam_json:gleam/json.to_string_tree"]
+in_package = "__shim_to_string_tree"
+
+[overrides."gleam_json:gleam/json.do_to_string"]
+package = "gleam_json_ffi"
+function = "json_to_string"
+
+[overrides."gleam_json:gleam/json.do_string"]
+package = "gleam_json_ffi"
+function = "json_string"
+
+[overrides."gleam_json:gleam/json.do_bool"]
+package = "gleam_json_ffi"
+function = "json_bool"
+
+[overrides."gleam_json:gleam/json.do_int"]
+package = "gleam_json_ffi"
+function = "json_int"
+
+[overrides."gleam_json:gleam/json.do_float"]
+package = "gleam_json_ffi"
+function = "json_float"
+
+[overrides."gleam_json:gleam/json.do_null"]
+package = "gleam_json_ffi"
+function = "json_null"
+
+[overrides."gleam_json:gleam/json.do_object"]
+package = "gleam_json_ffi"
+function = "json_object"
+
+[overrides."gleam_json:gleam/json.do_preprocessed_array"]
+package = "gleam_json_ffi"
+function = "json_array"

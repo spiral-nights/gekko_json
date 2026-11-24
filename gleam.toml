@@ -6,3 +6,4 @@ repository = { type = "github", user = "spiral-nights", repo = "gekko_json" }
 
 [dependencies]
 gleam_json = ">= 3.0.0 and < 4.0.0"
+gekko_stdlib = { git = "https://github.com/spiral-nights/gekko_stdlib.git", ref = "main" }

@@ -37,6 +37,16 @@ else
   STDLIB_SHIM_DEP="gekko_stdlib = { git = \"https://github.com/spiral-nights/gekko_stdlib.git\", ref = \"${GEKKO_STDLIB_REF:-main}\" }"
 fi
 
+if [ -n "${GEKKO_STDLIB_DIR:-}" ] || [ "${GEKKO_STDLIB_REF:-main}" != "main" ]; then
+  STAGED_JSON="$TMP_DIR/staged_gekko_json"
+  mkdir -p "$STAGED_JSON"
+  (cd "$ROOT" && tar cf - --exclude=build --exclude=manifest.toml .) | (cd "$STAGED_JSON" && tar xf -)
+  sed -i -E "s|^gekko_stdlib = .*|$STDLIB_SHIM_DEP|" "$STAGED_JSON/gleam.toml"
+  JSON_SHIM_DEP="gekko_json = { path = \"$STAGED_JSON\" }"
+else
+  JSON_SHIM_DEP="gekko_json = { path = \"$ROOT\" }"
+fi
+
 cat > "$PROJECT_DIR/gleam.toml" <<EOF
 name = "json_parity"
 version = "0.1.0"
@@ -45,7 +55,7 @@ version = "0.1.0"
 gleam_stdlib = ">= 1.0.0 and < 2.0.0"
 gleam_json = ">= 3.0.0 and < 4.0.0"
 $STDLIB_SHIM_DEP
-gekko_json = { path = "$ROOT" }
+$JSON_SHIM_DEP
 EOF
 
 cat > "$PROJECT_DIR/src/gleeunit/should.gleam" <<'EOF'

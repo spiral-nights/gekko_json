@@ -1,4 +1,5 @@
 ///|
+#gekko.patch
 #derive(Eq, Debug)
 pub(all) struct Json {
   raw : @json.Json
@@ -102,6 +103,7 @@ fn format_char_hex(c : Char) -> String {
 }
 
 ///|
+#gekko.patch
 fn decode_string(json_str : String) -> Result[@gprelude.Dynamic, DecodeError] {
   let parsed : @json.Json = try {
     @json.parse(json_str, preserve_number_repr=true)
@@ -117,41 +119,49 @@ fn decode_string(json_str : String) -> Result[@gprelude.Dynamic, DecodeError] {
 }
 
 ///|
+#gekko.patch
 fn do_to_string(j : Json) -> String {
   j.raw.stringify()
 }
 
 ///|
+#gekko.patch
 pub fn to_string_tree(json : Json) -> @string_tree.StringTree {
   @string_tree.from_string(do_to_string(json))
 }
 
 ///|
+#gekko.patch
 fn do_string(input : String) -> Json {
   { raw: @json.Json::string(input) }
 }
 
 ///|
+#gekko.patch
 fn do_bool(input : Bool) -> Json {
   { raw: @json.Json::boolean(input) }
 }
 
 ///|
+#gekko.patch
 fn do_int(input : Int64) -> Json {
   { raw: @json.Json::number(input.to_double(), repr=input.to_string()) }
 }
 
 ///|
+#gekko.patch
 fn do_float(input : Double) -> Json {
   { raw: @json.Json::number(input) }
 }
 
 ///|
+#gekko.patch
 fn do_null() -> Json {
   { raw: @json.Json::null() }
 }
 
 ///|
+#gekko.patch
 fn do_object(entries : @gprelude.GList[(String, Json)]) -> Json {
   let m : Map[String, @json.Json] = Default::default()
   for cur = entries {
@@ -166,6 +176,7 @@ fn do_object(entries : @gprelude.GList[(String, Json)]) -> Json {
 }
 
 ///|
+#gekko.patch
 fn do_preprocessed_array(entries : @gprelude.GList[Json]) -> Json {
   { raw: @json.Json::array(entries.to_array().map(fn(j) { j.raw })) }
 }

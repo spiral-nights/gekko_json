@@ -14,3 +14,9 @@ version = ">= 3.0.0 and < 4.0.0"
 
 [tools.gekko.use_shims]
 gleam_stdlib = "gekko_stdlib"
+
+[tools.gekko.patches."gleam/json"]
+imports = [
+  "moonbitlang/core/json @mjson",
+  "moonbitlang/core/string @str",
+]

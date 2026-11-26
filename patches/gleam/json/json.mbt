@@ -2,11 +2,11 @@
 #gekko.patch
 #derive(Eq, Debug)
 pub(all) struct Json {
-  raw : @json.Json
+  raw : @mjson.Json
 }
 
 ///|
-fn hash_raw_json(j : @json.Json, hasher : Hasher) -> Unit {
+fn hash_raw_json(j : @mjson.Json, hasher : Hasher) -> Unit {
   match j {
     Null => hasher.combine_int(0)
     True => hasher.combine_int(1)
@@ -48,7 +48,7 @@ pub impl @gprelude.GleamInspect for Json with gleam_inspect(self) {
 }
 
 ///|
-fn json_to_dynamic(j : @json.Json) -> @gprelude.Dynamic {
+fn json_to_dynamic(j : @mjson.Json) -> @gprelude.Dynamic {
   match j {
     Null => @gprelude.DynNull
     True => @gprelude.DynBool(true)
@@ -105,15 +105,15 @@ fn format_char_hex(c : Char) -> String {
 ///|
 #gekko.patch
 fn decode_string(json_str : String) -> Result[@gprelude.Dynamic, DecodeError] {
-  let parsed : @json.Json = try {
-    @json.parse(json_str, preserve_number_repr=true)
+  let parsed : @mjson.Json = try {
+    @mjson.parse(json_str, preserve_number_repr=true)
   } catch {
-    @json.InvalidEof => return Err(UnexpectedEndOfInput)
-    @json.InvalidChar(_, c) => return Err(UnexpectedByte(format_char_hex(c)))
-    @json.InvalidNumber(_, s) => return Err(UnexpectedSequence(s))
-    @json.InvalidIdentEscape(_) => return Err(UnexpectedSequence("escape"))
-    @json.DuplicateKey(_, k) => return Err(UnexpectedSequence(k))
-    @json.DepthLimitExceeded => return Err(UnexpectedSequence("depth"))
+    @mjson.InvalidEof => return Err(UnexpectedEndOfInput)
+    @mjson.InvalidChar(_, c) => return Err(UnexpectedByte(format_char_hex(c)))
+    @mjson.InvalidNumber(_, s) => return Err(UnexpectedSequence(s))
+    @mjson.InvalidIdentEscape(_) => return Err(UnexpectedSequence("escape"))
+    @mjson.DuplicateKey(_, k) => return Err(UnexpectedSequence(k))
+    @mjson.DepthLimitExceeded => return Err(UnexpectedSequence("depth"))
   }
   Ok(json_to_dynamic(parsed))
 }
@@ -133,40 +133,40 @@ pub fn to_string_tree(json : Json) -> @string_tree.StringTree {
 ///|
 #gekko.patch
 fn do_string(input : String) -> Json {
-  { raw: @json.Json::string(input) }
+  { raw: @mjson.Json::string(input) }
 }
 
 ///|
 #gekko.patch
 fn do_bool(input : Bool) -> Json {
-  { raw: @json.Json::boolean(input) }
+  { raw: @mjson.Json::boolean(input) }
 }
 
 ///|
 #gekko.patch
 fn do_int(input : Int64) -> Json {
-  { raw: @json.Json::number(input.to_double(), repr=input.to_string()) }
+  { raw: @mjson.Json::number(input.to_double(), repr=input.to_string()) }
 }
 
 ///|
 #gekko.patch
 fn do_float(input : Double) -> Json {
-  { raw: @json.Json::number(input) }
+  { raw: @mjson.Json::number(input) }
 }
 
 ///|
 #gekko.patch
 fn do_null() -> Json {
-  { raw: @json.Json::null() }
+  { raw: @mjson.Json::null() }
 }
 
 ///|
 #gekko.patch
 fn do_object(entries : @gprelude.GList[(String, Json)]) -> Json {
-  let m : Map[String, @json.Json] = Default::default()
+  let m : Map[String, @mjson.Json] = Default::default()
   for cur = entries {
     match cur {
-      @gprelude.Nil => break { raw: @json.Json::object(m) }
+      @gprelude.Nil => break { raw: @mjson.Json::object(m) }
       @gprelude.Cons((k, v), rest) => {
         m.set(k, v.raw)
         continue rest
@@ -178,5 +178,5 @@ fn do_object(entries : @gprelude.GList[(String, Json)]) -> Json {
 ///|
 #gekko.patch
 fn do_preprocessed_array(entries : @gprelude.GList[Json]) -> Json {
-  { raw: @json.Json::array(entries.to_array().map(fn(j) { j.raw })) }
+  { raw: @mjson.Json::array(entries.to_array().map(fn(j) { j.raw })) }
 }

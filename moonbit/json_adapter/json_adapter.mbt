@@ -15,9 +15,9 @@ fn __to_char(s : String) -> Char {
 }
 
 ///|
-pub fn parse(arg0 : String, max_nesting_depth : Int64?, reject_duplicate_keys : Bool?, preserve_number_repr : Bool?) -> Result[@moonbitlang_core_json.Json, @moonbitlang_core_json.ParseError] {
+pub fn parse(arg0 : String, reject_duplicate_keys : Bool?, preserve_number_repr : Bool?) -> Result[@moonbitlang_core_json.Json, @moonbitlang_core_json.ParseError] {
   try {
-    let __res = @moonbitlang_core_json.parse((arg0).to_string_view(), max_nesting_depth?=(max_nesting_depth).map(fn(x0) { __to_int32(x0) }), reject_duplicate_keys?=reject_duplicate_keys, preserve_number_repr?=preserve_number_repr)
+    let __res = @moonbitlang_core_json.parse((arg0).to_string_view(), reject_duplicate_keys?=reject_duplicate_keys, preserve_number_repr?=preserve_number_repr)
     Ok(__res)
   } catch {
     __err => Err(__err)

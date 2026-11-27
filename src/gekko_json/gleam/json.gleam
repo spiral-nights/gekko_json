@@ -70,7 +70,7 @@ fn format_char_hex(c_str: String) -> String {
 
 /// @patch("gleam/json.decode_string")
 pub fn decode_string(json_str: String) -> Result(Dynamic, DecodeError) {
-  case mjson.parse(json_str, None, None, Some(True)) {
+  case mjson.parse(json_str, None, Some(True)) {
     Ok(parsed) -> Ok(json_to_dynamic(parsed))
     Error(err) ->
       mjson.match_parse_error(

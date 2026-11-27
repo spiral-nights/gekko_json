@@ -2,3 +2,5 @@ import {
   "gekko_json_mbt/gprelude" @gprelude,
   "moonbitlang/core/json" @moonbitlang_core_json,
 }
+
+warnings = "-alert_visibility"

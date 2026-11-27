@@ -19,12 +19,10 @@ pub type Replacer
 /// @external(moonbit, "json_adapter", "parse")
 pub fn parse(
   arg0: String,
-  max_nesting_depth: Option(Int),
   reject_duplicate_keys: Option(Bool),
   preserve_number_repr: Option(Bool),
 ) -> Result(Json, ParseError) {
   let _ = arg0
-  let _ = max_nesting_depth
   let _ = reject_duplicate_keys
   let _ = preserve_number_repr
   panic as "Implemented in MoonBit"

@@ -15,7 +15,3 @@ version = ">= 3.0.0 and < 4.0.0"
 
 [tools.gekko.use_shims]
 gleam_stdlib = "gekko_stdlib"
-
-[tools.gekko.type_overrides."gleam_json:gleam/json.Json"]
-package = "moonbitlang/core/json"
-type = "Json"

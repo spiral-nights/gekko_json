@@ -2,9 +2,10 @@
 
 import gekko_json/ffi/map.{type Map}
 
-import gleam/json.{type Json}
-
 import gleam/option.{type Option}
+
+/// @external_type(moonbit, "moonbitlang/core/json", "Json")
+pub type Json
 
 /// @external_type(moonbit, "moonbitlang/core/json", "ParseError")
 pub type ParseError

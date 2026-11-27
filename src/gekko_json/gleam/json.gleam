@@ -3,13 +3,16 @@ import gekko_json/ffi/map as mmap
 import gleam/dynamic.{type Dynamic}
 import gleam/int
 import gleam/json.{
-  type DecodeError, type Json, UnexpectedByte, UnexpectedEndOfInput,
-  UnexpectedSequence,
+  type DecodeError, UnexpectedByte, UnexpectedEndOfInput, UnexpectedSequence,
 }
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
 import gleam/string_tree.{type StringTree}
+
+/// @patch_type("gleam/json.Json")
+pub type Json =
+  mjson.Json
 
 fn json_to_dynamic(j: Json) -> Dynamic {
   mjson.match_json(

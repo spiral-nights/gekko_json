@@ -1,0 +1,3 @@
+import {
+  "gekko_json_mbt/gprelude" @gprelude,
+}
